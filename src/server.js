@@ -1,7 +1,9 @@
-import express from 'express'
+import express, { Router } from 'express'
 import { json, urlencoded } from 'body-parser'
 import morgan from 'morgan'
 import cors from 'cors'
+import billRouter from './resources/bill/bill.router'
+import userRouter from './resources/user/user.router'
 
 const app = express()
 
@@ -12,9 +14,8 @@ app.use(json())
 app.use(urlencoded({ extended: true }))
 app.use(morgan('dev'))
 
-app.get('/', (req, res) => {
-  res.send({ message: 'hello you' })
-})
+app.use('/api/bill', billRouter)
+app.use('/api/user', userRouter)
 
 export const start = () => {
   app.listen(3000, () => {
